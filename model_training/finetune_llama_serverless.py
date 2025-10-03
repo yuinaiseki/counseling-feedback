@@ -12,6 +12,7 @@ import modal
 import os
 from dataclasses import dataclass, field
 from typing import Optional
+from huggingface_hub import login
 
 app = modal.App("finetune-multilevelfeedback-llama")
 
@@ -106,6 +107,7 @@ def train_llama_model(
 
     # Get HF token from Modal secret
     access_token = os.environ.get("HUGGINGFACE_TOKEN")
+    login(token=access_token)
 
     # Set environment variables
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
