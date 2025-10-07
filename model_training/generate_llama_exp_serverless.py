@@ -65,7 +65,7 @@ MAX_TRIES = 5
 )
 def generate_samples(
     output_dir: str = "/root/model_training/models/output",
-    dataset_name: str = "feedback_qesconv",
+    dataset_name: str = "feedback_qesconv_labeledsplit",                     # CHANGED: originlly feedback_qesconv
     start_index: int = 0,
     threshold: float = 0.5,
 ):
@@ -110,7 +110,7 @@ def generate_samples(
     def extract_output(s):
         start_index = s.find("Response:")
         start_index += len("Response:")
-        extracted_string = s[start_index:].strip()
+        extracted_string = s[start_index:len(s)].strip()            # added len(s) ...?
         return extracted_string.rstrip('</s>')  # Remove the </s> token
 
     print("Loading tokenizer...")
