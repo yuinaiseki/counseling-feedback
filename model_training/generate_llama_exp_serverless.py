@@ -107,11 +107,13 @@ def generate_samples(
                     return True
             return False
 
+
     def extract_output(s):
         start_index = s.find("Response:")
         start_index += len("Response:")
         extracted_string = s[start_index:len(s)].strip()            # added len(s) ...?
         return extracted_string.rstrip('</s>')  # Remove the </s> token
+        
 
     print("Loading tokenizer...")
     tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct", token=access_token)
@@ -153,9 +155,15 @@ def generate_samples(
             outputs = []
             true_count = 0
             for _ in range(10):
-                helper_line = dataset['test'][ind]['text'].split('Response:')[0].split('\n')[-3]
+                prompt = dataset['test'][ind]['text'].split('Response:')[0].split('\n')[-3]
 
-                original_feedback = dataset['test'][ind]['text'] + json.dumps({"perfect": True})[:-6]
+                original_feedback = dataset['test'][ind]['text']
+
+                if not prompt.endswith("### Response:"):
+                    raise ValueError("Prompt does not end with expected token")
+
+                prompt = f"<s>{prompt}"  # Assuming you're using LLaMA chat formatting
+                query = tokenizer(prompt, return_tensors="pt").to(model.device)
 
                 new_prompt_encoded = tokenizer(original_feedback, add_special_tokens=False, return_tensors="pt").to(
                     model.device)
@@ -195,7 +203,8 @@ def generate_samples(
 
                 query = tokenizer(feedback_to_continue, add_special_tokens=False, return_tensors="pt").to(
                     model.device)
-                output = model.generate(**query, max_new_tokens=600, do_sample=True, temperature=0.8,
+                output = model.generate(**query, max_new_tokens=300, do_sample=False, temperature=0.1,
+                                        top_p=1.0, repetition_penalty=1.0,
                                         eos_token_id=tokenizer.eos_token_id,
                                         pad_token_id=tokenizer.pad_token_id,
                                         stopping_criteria=StoppingCriteriaList([StopOnTokens()]))
@@ -223,7 +232,7 @@ def generate_samples(
                             new_prompt = '\n'.join(splitted) + '\n\n### Response:' + json.dumps({"perfect": label})[:-1]
                             print("----- new prompt: ", new_prompt)
                             new_prompt_encoded = tokenizer(new_prompt, add_special_tokens=False, return_tensors="pt").to(model.device)
-                            improved_output = model.generate(**new_prompt_encoded, max_new_tokens=600, do_sample=True, temperature=0.8, eos_token_id=tokenizer.eos_token_id,
+                            improved_output = model.generate(**new_prompt_encoded, max_new_tokens=300, do_sample=False, temperature=0.1, eos_token_id=tokenizer.eos_token_id,
                                         pad_token_id=tokenizer.pad_token_id,  stopping_criteria=StoppingCriteriaList([StopOnTokens()]))
                             decoded_improved_output = tokenizer.decode(improved_output[0])
 

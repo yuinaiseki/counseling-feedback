@@ -209,6 +209,7 @@ def train_llama_model(
         train_dataset=dataset['train'],
         peft_config=peft_config,
         processing_class=tokenizer,
+        completion_only_loss=True,
         args=SFTConfig(
             per_device_train_batch_size=training_args.per_device_train_batch_size,
             gradient_accumulation_steps=training_args.gradient_accumulation_steps,

@@ -17,7 +17,7 @@ num_train = math.trunc(len(data) * train_to_test)
 with open ("train.json", "w") as file:
     for item in data:
         # Add EOS token to each training example
-        item['text'] = item['text'] + tokenizer.eos_token
+        item['text'] = item['text']
     json.dump(data[0:num_train], file)
     print(len(data[0:num_train]))                           # 6543      8162
 
