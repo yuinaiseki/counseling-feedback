@@ -728,38 +728,16 @@
     "f1_score": 0.88
   },
   "per_category": {
-    "Questions": {
-      "precision": 0.6,
-      "recall": 0.42857142857142855,
-      "f1_score": 0.5,
-      "accuracy": 0.6470588235294118,
-      "support": 7,
-      "tp": 3,
-      "fp": 2,
-      "fn": 4,
-      "tn": 8
-    },
-    "Structure": {
-      "precision": 0.5,
-      "recall": 1.0,
-      "f1_score": 0.6666666666666666,
+    "Self-disclosure": {
+      "precision": 0,
+      "recall": 0.0,
+      "f1_score": 0,
       "accuracy": 0.9411764705882353,
       "support": 1,
-      "tp": 1,
-      "fp": 1,
-      "fn": 0,
-      "tn": 15
-    },
-    "Professionalism": {
-      "precision": 0,
-      "recall": 0,
-      "f1_score": 0,
-      "accuracy": 1.0,
-      "support": 0,
       "tp": 0,
       "fp": 0,
-      "fn": 0,
-      "tn": 17
+      "fn": 1,
+      "tn": 16
     },
     "Validation": {
       "precision": 0.6666666666666666,
@@ -783,16 +761,38 @@
       "fn": 3,
       "tn": 12
     },
-    "Self-disclosure": {
-      "precision": 0,
-      "recall": 0.0,
-      "f1_score": 0,
+    "Structure": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1_score": 0.6666666666666666,
       "accuracy": 0.9411764705882353,
       "support": 1,
+      "tp": 1,
+      "fp": 1,
+      "fn": 0,
+      "tn": 15
+    },
+    "Questions": {
+      "precision": 0.6,
+      "recall": 0.42857142857142855,
+      "f1_score": 0.5,
+      "accuracy": 0.6470588235294118,
+      "support": 7,
+      "tp": 3,
+      "fp": 2,
+      "fn": 4,
+      "tn": 8
+    },
+    "Professionalism": {
+      "precision": 0,
+      "recall": 0,
+      "f1_score": 0,
+      "accuracy": 1.0,
+      "support": 0,
       "tp": 0,
       "fp": 0,
-      "fn": 1,
-      "tn": 16
+      "fn": 0,
+      "tn": 17
     },
     "Empathy": {
       "precision": 0.5555555555555556,

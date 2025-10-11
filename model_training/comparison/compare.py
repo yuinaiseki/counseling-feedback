@@ -73,7 +73,6 @@ def calculate_metrics(labeled: Dict, generated: Dict) -> Dict:
 
 # checks if model struggles with any particular category
 def per_category_performance(data: List[Dict]) -> Dict:
-    """Calculate performance metrics for each category."""
     # Collect all categories
     all_categories = set()
     for d in data:
@@ -168,7 +167,6 @@ def difficulty_analysis(data: List[Dict]) -> Dict:
     return difficulty
 
 def error_analysis(data: List[Dict]) -> Dict:
-    """Analyze common error patterns."""
     errors = {
         'fp': [],
         'fn': [],
@@ -215,8 +213,8 @@ def error_analysis(data: List[Dict]) -> Dict:
         'most_omitted': dict(errors['omitted_categories'].most_common(10))
     }
 
+# comparing all metics + printing them to console
 def compare_results(combined_file: str, output_file: str = "comparison_results.json"):
-    """Compare ground truth and generated results."""
     
     with open(combined_file, 'r') as f:
         data = json.load(f)
@@ -314,8 +312,8 @@ def compare_results(combined_file: str, output_file: str = "comparison_results.j
 
     sorted_categories = sorted(category_performance.items(), key=lambda x: x[1]['f1_score'], reverse=True)
     for category, metrics in sorted_categories:
-        print(f" - {category:20s} - TP / (TP + FP): {metrics['precision']:.2%}, TP / (TP + FN): {metrics['recall']:.2%}, "
-              f"TP + TN / All: {metrics['accuracy']:.2%}")
+        print(f" - {category:20s} - Precision: {metrics['precision']:.2%}, Recall: {metrics['recall']:.2%}, "
+              f"Accuracy: {metrics['accuracy']:.2%}")
 
     # save
     results = {
